@@ -1,6 +1,51 @@
+#################
 # chose dataset 
-# GSE 213994
+#################
+# GSE 213994 from GEO
 # PMID 37395319 (Okur et al. Aging cell 22: e13909 (2023)
 # Paired end, 24.4 Gb
 # 2 groups with 5 replicates each
 # dataset added to spreadsheet, approved by teacher
+
+# create folders on server : 
+	# origScripts (unmodified scripts copied from data/scripts)
+	# myScripts (edited)
+	# testdir (to try out)
+	# assigBIT09 (final versions)
+
+###################
+# download files
+###################	
+
+# test script for download
+
+# 1) try fastq-dump for 1 sample into testdir
+# not via script - only fastq-dump command on 1 sample, with 2 reads persample
+# must use --gzip option and --split-3 because PE
+
+fastq-dump --gzip --split-3 -X 2 -O testdir/ SRR21679459
+
+# SRR21679459_2.fastq.gz file written to testdir
+
+# 2) run script on all samples (but only 2 reads/sample)
+# copy Accession list (with acc nrs) from NBCI GEO to testdir
+# edit script for downloading to download only 2 runs per sample
+fastq-dump --gzip -X 2
+ 
+# in folder myScripts, adding SRR_Acc_list.txt to folder and output dit testdir
+./bit09-download.sh SRR_Acc_list testdir PE
+
+# --> all fastq.gz files generated (split into _1 and _2
+# with 2 runs/sample
+
+### bulk download
+# run download of all samples in assigBIT09 folder
+# output folder downloads
+# remove -X 2 argument in bash script --> all reads get downloaded
+# in tmux session download
+./bit09-download-srr.sh SRR_Acc_List.txt downloads PE
+# detach tmux session
+
+# --> all downloads fastq.gz in folder downloads in assigBIT09
+
+
