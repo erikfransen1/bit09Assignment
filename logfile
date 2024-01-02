@@ -49,3 +49,31 @@ fastq-dump --gzip -X 2
 # --> all downloads fastq.gz in folder downloads in assigBIT09
 
 
+##########################
+# fastqc preprocessing
+##########################
+# copy original bashscript bit09-fastqc.sh to myScripts
+
+# bashscript requires 3 input parameters:
+ 1) path of folder with fastq.gz files (here: /home/erikf/assigBIT09/downloads)
+ 2) path of output folder (here : /home/erikf/assigBIT09/fastqc_output)
+ 3) number of threads
+
+# testrun on 2 first samples (SRR21679459_1 and _2.fastq.gz) 
+# put 2 fastq.gz files into folder testSubset, ans output into testOutput
+./bit09-fastqc.sh /home/erikf/assigBIT09/testSubset/ /home/erikf/assigBIT09/testOutput/ 2
+
+# transfer 2 .html files from /testOutput to local VM (folder assignment)
+# html looks OK
+ 
+# run entire QC on server in 8 threads (since low activity on server)
+tmux attach -t download
+./bit09-fastqc.sh /home/erikf/assigBIT09/downloads/ /home/erikf/assigBIT09/fastqc_output/ 8
+
+# transfer .html files to local VM
+in folder fastqc_output on server:
+mkdir htmlOnly
+cp *.html htmlOnly/
+
+FTP via filezilla all .html to folder /BIT09/assignment/fastqc_htmlfiles on VM
+
