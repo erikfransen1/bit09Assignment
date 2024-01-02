@@ -81,6 +81,8 @@ tmux attach -t download
 ########################## 
 # Trimming
 #######################
+# search for overrepresented sequences using bit09-getAdapters.sh
+# no overrept seqs found
 
 # bash script for Trimmomatic requires inpur
  1) path of folder with input (test : testSubset)
