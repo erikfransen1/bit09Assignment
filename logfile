@@ -70,10 +70,39 @@ fastq-dump --gzip -X 2
 tmux attach -t download
 ./bit09-fastqc.sh /home/erikf/assigBIT09/downloads/ /home/erikf/assigBIT09/fastqc_output/ 8
 
-# transfer .html files to local VM
-in folder fastqc_output on server:
-mkdir htmlOnly
-cp *.html htmlOnly/
+# transfer all fastqc output files to local VM
+# FTP via filezilla all .html to folder /BIT09/assignment/fastqc_results on VM
 
-FTP via filezilla all .html to folder /BIT09/assignment/fastqc_htmlfiles on VM
+# run MultiQC on local VM in folder fastqc_results
+# results in folder multiqc_data
+# open file multiqc_report.html in firefox
+
+
+########################## 
+# Trimming
+#######################
+
+# bash script for Trimmomatic requires inpur
+ 1) path of folder with input (test : testSubset)
+ 2) path of output folder (test : testOutputTrimm)
+ 3) adapter file (here: adapter.fa)
+ 4) number of threads
+--> need to use PE file
+
+# copy all adapters from optfolder into assigBIT09 on server
+# combine all adapters into 1 file adapters.fa
+cp /opt/Trimmomatic-0.39/adapters/* .
+cat NexteraPE-PE.fa TruS* > adapters.fa
+rm TruS*
+rm Nex*
+
+# folder for outpu from Trimmmomatic
+mkdir testOutputTrimm
+
+# 8 threads = too much
+./bit09-trimmomatic-PE.sh /home/erikf/assigBIT09/downloads /home/erikf/outputTrimm/  /home/erikf/assigBIT09/adapters.fa 6
+
+
+
+
 
