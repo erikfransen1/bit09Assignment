@@ -81,30 +81,49 @@ tmux attach -t download
 ########################## 
 # Trimming
 #######################
-# search for overrepresented sequences using bit09-getAdapters.sh
+# search for overrepresented sequences using bit09-getAdapters-grep.sh
+# greps in fastqc output for overrepresented sequences
+# input:
+	1) path with fastqc output
+	2) number of overrep seq to be found
+./bit09-getAdapters-grep.sh /home/erikf/assigBIT09/fastqc_output 4
+
 # no overrept seqs found
 
-# bash script for Trimmomatic requires inpur
- 1) path of folder with input (test : testSubset)
- 2) path of output folder (test : testOutputTrimm)
- 3) adapter file (here: adapter.fa)
- 4) number of threads
---> need to use PE file
-
-# copy all adapters from optfolder into assigBIT09 on server
-# combine all adapters into 1 file adapters.fa
+# compose file of most common adapters
+# from list in opt folder into assigBIT09 folder
 cp /opt/Trimmomatic-0.39/adapters/* .
 cat NexteraPE-PE.fa TruS* > adapters.fa
 rm TruS*
 rm Nex*
 
+# bash script for Trimmomatic requires input (testrun)
+ 1) path of folder with input (test : testSubset = only runs from 1st sample)
+ 2) path of output folder (test : testOutputTrimm)
+ 3) adapter file (here: adapter.fa)
+ 4) number of threads
+--> need to use PE file
+
+./bit09-trimmomatic-PE.sh /home/erikf/assigBIT09/testSubset /home/erikf/testOutputTrimm/  /home/erikf/assigBIT09/adapters.fa 4
+
+# run all samples
 # folder for outpu from Trimmmomatic
-mkdir testOutputTrimm
 
 # 8 threads = too much
-./bit09-trimmomatic-PE.sh /home/erikf/assigBIT09/downloads /home/erikf/outputTrimm/  /home/erikf/assigBIT09/adapters.fa 6
+./bit09-trimmomatic-PE.sh /home/erikf/assigBIT09/downloads /home/erikf/assigBIT09/outputTrimm/  /home/erikf/assigBIT09/adapters.fa 4
+
+##########################
+# rerun fastqc
+##########################
+# bashscript requires 3 input parameters:
+ 1) path of folder with fastq.gz files (here: /home/erikf/assigBIT09/outputTrimm)
+ 2) path of output folder (here : /home/erikf/assigBIT09/outputFastQC_afterTrimm)
+ 3) number of threads
 
 
+# run entire QC on server in 8 threads (since low activity on server)
+tmux attach -t download
+./bit09-fastqc.sh /home/erikf/assigBIT09/outputTrimm/ /home/erikf/assigBIT09/outputFastQC_afterTrimm/ 4
 
-
-
+# output in outputFastQC_afterTrimm op server
+# transfer results naar folder fastqc_trimm_results op local VM
