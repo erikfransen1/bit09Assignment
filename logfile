@@ -121,9 +121,30 @@ rm Nex*
  3) number of threads
 
 
-# run entire QC on server in 8 threads (since low activity on server)
+# run entire QC on server in 4 threads 
 tmux attach -t download
 ./bit09-fastqc.sh /home/erikf/assigBIT09/outputTrimm/ /home/erikf/assigBIT09/outputFastQC_afterTrimm/ 4
 
 # output in outputFastQC_afterTrimm op server
-# transfer results naar folder fastqc_trimm_results op local VM
+# transfer results naar folder fastqc_trimm_results op local VM for visualization of htlm
+
+# run multiqc
+
+
+###############################
+# mapping
+###############################
+# on server, starting from output from trimmomatic (.fastqc.gz files)
+# test script bit09-mapping-hisat2-PE on server, on 1 sample
+# in subfolder myScripts
+# copy from outputTrimm to folder myScripts 
+mkdir testdir2
+cp SRR21679461* ../../myScripts/
+cp *fastq.gz testdir2/
+rm -r SRR216
+# (since only .Fastqc.gz files are needed --> only these copied to testdir2
+# run mapping from 1 sample inp tmux session
+bash bit09-mapping-hisat2-PE.sh testdir2 /data/igenomes/hisat2-index-mm10_genome/genome hisat2-test-mm10 4
+
+
+
