@@ -149,7 +149,7 @@ rm -r SRR216
 bash bit09-mapping-hisat2-PE.sh testdir2 /data/igenomes/hisat2-index-mm10_genome/genome hisat2-test-mm10 4
 
 # results in hista2-test-mm10 (.bam file, 2 unmapped files)
-
-bash bit09-mapping-hisat2-PE.sh outputTrimm /data/igenomes/hisat2-index-mm10_genome/genome hisat2-mapping-mm10 4
+# use index file from mouse grcm38 instead of mm10
+bash bit09-mapping-hisat2-PE.sh outputTrimm /data/igenomes/hisat2-index-grcm38_genome_tran/genome_tran hisat2-mapping-grcm38 4
 
 
