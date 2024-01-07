@@ -135,6 +135,8 @@ tmux attach -t download
 # mapping
 ###############################
 # on server, starting from output from trimmomatic (.fastqc.gz files)
+
+### testrun
 # test script bit09-mapping-hisat2-PE on server, on 1 sample
 # in subfolder myScripts
 # copy from outputTrimm to folder myScripts 
@@ -146,5 +148,8 @@ rm -r SRR216
 # run mapping from 1 sample inp tmux session
 bash bit09-mapping-hisat2-PE.sh testdir2 /data/igenomes/hisat2-index-mm10_genome/genome hisat2-test-mm10 4
 
+# results in hista2-test-mm10 (.bam file, 2 unmapped files)
+
+bash bit09-mapping-hisat2-PE.sh outputTrimm /data/igenomes/hisat2-index-mm10_genome/genome hisat2-mapping-mm10 4
 
 
