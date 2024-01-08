@@ -187,3 +187,20 @@ rm -r hisat2-mapping-grcm38_2
 mv * ../outputTrimm
 rm -r outputTrimm2
  
+ 
+###################
+# Samtools
+###################
+copy bash script to myScripts
+cp bit09-filtering-samtools.sh ../myScripts/
+
+# arguments:
+        1. Path of the folder with mapping files to run samtools on : /home/erikf/assigBIT09/hisat2-mapping-grcm38
+        2. MAPping Quality value to filter : 20
+        3. Path of the output folder : /home/erikf/assigBIT09/outputSamtools
+        4. Number of threads to use  : 4
+
+mkdir outputSamtools (in folder assig)
+
+# in folde myScripts (with tmux)
+bash bit09-filtering-samtools.sh /home/erikf/assigBIT09/hisat2-mapping-grcm38 20 /home/erikf/assigBIT09/outputSamtools 4 
