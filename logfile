@@ -112,6 +112,24 @@ rm Nex*
 # 8 threads = too much
 ./bit09-trimmomatic-PE.sh /home/erikf/assigBIT09/downloads /home/erikf/assigBIT09/outputTrimm/  /home/erikf/assigBIT09/adapters.fa 4
 
+## problem with 59 and 63
+# ?? only 3 files for sample 59 and 63 ??
+# run trimmomatic again for these 2 samples
+# in assigBIT09 folder
+mkdir downloads2
+mkdir outputTrimm2
+# in downloads folder:copy downloads for sample 59 and 63 to download2
+cp SRR21679459* ../downloads2
+cp SRR21679463* ../downloads2
+
+./bit09-trimmomatic-PE.sh /home/erikf/assigBIT09/downloads2 /home/erikf/assigBIT09/outputTrimm2/  /home/erikf/assigBIT09/adapters.fa 4
+
+# result = OK
+# for 53 and 59, all 4 fastq.gz files were made
+# outputTrimm2 = new input folder for mapping
+rm -r downloads2
+
+
 ##########################
 # rerun fastqc
 ##########################
@@ -149,7 +167,23 @@ rm -r SRR216
 bash bit09-mapping-hisat2-PE.sh testdir2 /data/igenomes/hisat2-index-mm10_genome/genome hisat2-test-mm10 4
 
 # results in hista2-test-mm10 (.bam file, 2 unmapped files)
+
+### run complete analysis
 # use index file from mouse grcm38 instead of mm10
 bash bit09-mapping-hisat2-PE.sh outputTrimm /data/igenomes/hisat2-index-grcm38_genome_tran/genome_tran hisat2-mapping-grcm38 4
 
+### problem with 59 and 63
+# for 59 and 63, output = missing dus to missing files after Trimmomatic
+# Trimmomatic = re-ran (see above) , missing files ion outputTrimm2
+# run mapping for samples 59 and 63 with output in hisat2-mapping-grcm38_2
+bash bit09-mapping-hisat2-PE.sh outputTrimm2 /data/igenomes/hisat2-index-grcm38_genome_tran/genome_tran hisat2-mapping-grcm38_2 4
+# werkt OK --> files made within output folder hisat2-mapping-grcm38_2
 
+# move all mapping output from hisat2-mapping-grcm38_2 into hisat2-mapping-grcm38 where other .bam files are
+mv * ../hisat2-mapping-grcm38
+rm -r hisat2-mapping-grcm38_2
+
+# move output from Trimmomatic from 59 and 63 from outputTrimm2 to folder outputTrimm (where other output is)
+mv * ../outputTrimm
+rm -r outputTrimm2
+ 
