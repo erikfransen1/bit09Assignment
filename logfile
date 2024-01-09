@@ -223,3 +223,36 @@ Cidec : chr6:113,424,634-113,435,760
 Actb (house keeping gene) : chr5:142,903,115-142,906,754
 load in filtered_sorted.bam
 screenshots from Actb en Pck1 for samples 60 and 67 on Windows Howest/BIT09/assignment
+
+
+#########################
+# HTseq count
+#########################
+
+# new script (-2024) needs 9 input parameters
+	1. Path of the folder with the mapping files to run HTSeqCount on. 
+			/outputSamtools
+        2. Path of the GTF file.
+        		/data/igenomes/Mus_musculus/UCSC/mm10/Annotation/Genes/genes.gtf
+        3. Path of the output folder
+        		mkdir outputHTseq
+        		/home/erikf/assigBIT09/outputHTseq
+        4. Feature type to use from GTF file (e.g. CDS, exon).
+        		exon
+        5. Attribute to use as label for counting (e.g. gene_id, gene_name, transcript_id).
+        		gene_id
+        6. Specify library layout either PE (paired end) or SE (single end).
+        		PE
+        7. Specify strandedness either YES (HTSeq default) or NO  (or REVERSE).
+        		YES
+        8. Mode either intersection-strict or union (HTSeq default).
+        		intersection-strict
+        9. Number of threads to use.
+        		4
+# testrun with only 3 .bam files from first dsample, in testdir/testHTseq
+./bit09-htseqcount-2024.sh /home/erikf/testdir/testHTseq /data/igenomes/Mus_musculus/UCSC/mm10/Annotation/Genes/genes.gtf /home/erikf/assigBIT09/outputHTseq exon gene_id PE NO intersection-strict 4
+
+# full analysis
+./bit09-htseqcount-2024.sh /home/erikf/assigBIT09/outputSamtools /data/igenomes/Mus_musculus/UCSC/mm10/Annotation/Genes/genes.gtf /home/erikf/assigBIT09/outputHTseq exon gene_id PE YES intersection-strict 4
+
+
