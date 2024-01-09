@@ -204,3 +204,22 @@ mkdir outputSamtools (in folder assig)
 
 # in folde myScripts (with tmux)
 bash bit09-filtering-samtools.sh /home/erikf/assigBIT09/hisat2-mapping-grcm38 20 /home/erikf/assigBIT09/outputSamtools 4 
+
+
+#################
+# IGV 
+################## add screenshot to report !!!!
+# must be run locally on VM
+# create subfolder IGV in /media/sf_SF_CentOS shared folder on VM 
+# transfer necessary files using filezilla for 2 samples (60 and 67 = one for each treat group
+	filtered_sorted.bam	/home/erikf/assigBIT09/outputSamtools/SRR21679460_filtered_sorted.bam
+	filtered_sorted.bam.bai	/home/erikf/assigBIT09/outputSamtools/SRR21679460_filtered_sorted.bam.bai
+
+genes.gtf and genome.fa already in IGV --> not needed
+
+# gene of interst for assignment : Cidec, Pck1, Plin1 = differentially expressed
+# search in UCSC, mouse grcm28/mm10
+Cidec : chr6:113,424,634-113,435,760
+Actb (house keeping gene) : chr5:142,903,115-142,906,754
+load in filtered_sorted.bam
+screenshots from Actb en Pck1 for samples 60 and 67 on Windows Howest/BIT09/assignment
